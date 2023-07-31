@@ -21,7 +21,7 @@ return new class extends Migration
             $table->time('Duration')->nullable();
             $table->foreignId('user_id')->references('id')->on('users');
             $table->foreignId('reference_id')->references('id')->on('references');
-            $table->foreignId('chapter_id')->references('id')->on('chapter');
+            $table->foreignId('chapter_id')->references('id')->on('chapters');
             $table->timestamps();
             $table->softDeletes();
         });
