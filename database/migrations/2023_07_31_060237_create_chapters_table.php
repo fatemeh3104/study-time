@@ -13,7 +13,11 @@ return new class extends Migration
     {
         Schema::create('chapters', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->integer('number_of_pages');
             $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 

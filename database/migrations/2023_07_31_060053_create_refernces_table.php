@@ -13,7 +13,11 @@ return new class extends Migration
     {
         Schema::create('refernces', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->string('hardness-degree');
             $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 

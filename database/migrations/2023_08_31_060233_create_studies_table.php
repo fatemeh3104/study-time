@@ -13,7 +13,17 @@ return new class extends Migration
     {
         Schema::create('studies', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->string('target_type');
+            $table->string('target');
+            $table->time('start_time')->nullable();
+            $table->time('end_time')->nullable();
+            $table->time('Duration')->nullable();
+            $table->foreignId('user_id')->references('id')->on('users');
+            $table->foreignId('reference_id')->references('id')->on('references');
+            $table->foreignId('chapter_id')->references('id')->on('chapter');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
