@@ -10,6 +10,7 @@ use App\Http\Requests\SignUpUserRequest;
 use App\Http\Requests\VerificationRequest;
 use App\Models\User;
 use App\Models\Verification;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
@@ -18,21 +19,42 @@ class UserController extends Controller
 {
     public function login(LoginUserRequest $request)
     {
-        $request = $request->validated();
-        $user = User::where('email', $request['Email'])->first();
-        if (! $user || ! Hash::check($request['password'], $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
-            ]);
+        $validatedData = $request->validated();
+        $user = User::where('phone', $validatedData['phone'])->first();
+        if (! $user || ! Hash::check($validatedData['password'], $user->password)) {
+            return response([
+                'msg' => 'incorrect username or password'
+            ],401);
         }
-        return $user->createToken('token_base_name')->plainTextToken;
+        $token = $user->createToken('token_base_name')->plainTextToken;
+        $res = [
+            'user' => $user,
+            'token' => $token
+        ];
+
+        return response($res, 201);
     }
     public function sign_up(SignUpUserRequest $request):bool
     {
         $validatedData= $request->validated();
         $phone = $validatedData['phone'];
         $code = OTP::generate();
+        $request_phones = Verification::all();
+        $register_phone = User::all('phone');
+        foreach ($register_phone as $item) {
+            ;
+            if ($item['phone']==$phone){
+//                return false;
+            }
+        }
         $verification = new Verification();
+        $now = Carbon::now()->format('Y-m-d H:i:s');
+        foreach ($request_phones as $item){
+            dd($now->diff($item['created_at']));
+            if ($item['phone']==$phone&&$now-$item['created_ad']<2){
+
+            }
+        }
         try {
             $verification['phone']=$phone;
             $verification['code'] = $code;
@@ -63,14 +85,21 @@ class UserController extends Controller
                         $user->{$key} = $item;
                     }
                     $user->save();
+                    return true;
                 }catch (\Exception $e){
                     dd($e);
+                    return false;
                 }
+            }else{
+                return false;
             }
         }
+    }
 
-
-
-
+    public function loqout(Request $request){
+        auth()->user()->tokens()->delete();
+        return [
+            'message' => 'user logged out'
+        ];
     }
 }
