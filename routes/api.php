@@ -32,6 +32,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/reference', [ReferenceController::class, 'store']);
     Route::put('/reference/{id}', [ReferenceController::class, 'update']);
     Route::delete('/reference/{id}', [ReferenceController::class, 'destroy']);
+// private chapter routes
+    Route::get('/chapter', [ReferenceController::class, 'show']);
+    Route::post('/chapter', [ReferenceController::class, 'store']);
+    Route::put('/chapter/{id}', [ReferenceController::class, 'update']);
+    Route::delete('/chapter/{id}', [ReferenceController::class, 'destroy']);
 // private study routes
     Route::get('/study', [StudyController::class, 'show']);
     Route::post('/study', [StudyController::class, 'store']);
