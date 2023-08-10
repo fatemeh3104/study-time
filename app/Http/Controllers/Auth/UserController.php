@@ -48,13 +48,7 @@ class UserController extends Controller
             }
         }
         $verification = new Verification();
-        $now = Carbon::now()->format('Y-m-d H:i:s');
-        foreach ($request_phones as $item){
-            dd($now->diff($item['created_at']));
-            if ($item['phone']==$phone&&$now-$item['created_ad']<2){
 
-            }
-        }
         try {
             $verification['phone']=$phone;
             $verification['code'] = $code;
@@ -90,10 +84,9 @@ class UserController extends Controller
                     dd($e);
                     return false;
                 }
-            }else{
-                return false;
             }
         }
+        return false;
     }
 
     public function loqout(Request $request){
