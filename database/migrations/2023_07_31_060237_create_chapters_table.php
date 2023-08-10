@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->integer('number_of_pages');
+            $table->foreignId('reference_id')->references('id')->on('references');
             $table->timestamps();
             $table->softDeletes();
 
