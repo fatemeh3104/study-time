@@ -11,7 +11,7 @@ class StoreReferenceRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +23,7 @@ class StoreReferenceRequest extends FormRequest
     {
         return [
             'title' => ['required','string'],
-            'hardness_degree' => ['required']
+            'hardness-degree' => ['required']
         ];
     }
 }
