@@ -20,7 +20,6 @@ class ReferenceController extends Controller
         }catch (\Exception $e){
             return false;
         }
-
     }
 
     public function store(StoreReferenceRequest $request)
@@ -60,7 +59,7 @@ class ReferenceController extends Controller
 
     public function destroy($id)
     {
-//        $reference = Reference::query()->where('id', '=', $request['id']);
+//
         try {
             $reference = Reference::query()->where('id',$id);
             $reference->delete();

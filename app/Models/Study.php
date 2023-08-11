@@ -5,10 +5,11 @@ namespace App\Models;
 use App\Enums\StudyTargetType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Study extends Model
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes;
     protected $casts = [
         'target_type' => StudyTargetType::class
     ];

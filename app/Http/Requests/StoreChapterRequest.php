@@ -23,7 +23,8 @@ class StoreChapterRequest extends FormRequest
     {
         return [
             'title' => ['required'],
-            'number_of_pages' => ['required']
+            'number_of_pages' => ['required'],
+            'reference_id' => ['required']
         ];
     }
 }
