@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\UserController;
+use App\Http\Controllers\ChapterController;
 use App\Http\Controllers\ReferenceController;
 use App\Http\Controllers\StudyController;
 use Illuminate\Http\Request;
@@ -33,10 +34,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/reference/{id}', [ReferenceController::class, 'update']);
     Route::delete('/reference/{id}', [ReferenceController::class, 'destroy']);
 // private chapter routes
-    Route::get('/chapter', [ReferenceController::class, 'show']);
-    Route::post('/chapter', [ReferenceController::class, 'store']);
-    Route::put('/chapter/{id}', [ReferenceController::class, 'update']);
-    Route::delete('/chapter/{id}', [ReferenceController::class, 'destroy']);
+    Route::get('/chapter', [ChapterController::class, 'show']);
+    Route::post('/chapter', [ChapterController::class, 'store']);
+    Route::put('/chapter/{id}', [ChapterController::class, 'update']);
+    Route::delete('/chapter/{id}', [ChapterController::class, 'destroy']);
 // private study routes
     Route::get('/study', [StudyController::class, 'show']);
     Route::post('/study', [StudyController::class, 'store']);

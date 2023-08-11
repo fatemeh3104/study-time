@@ -14,23 +14,30 @@ class ReferenceController extends Controller
     public function show()
     {
         $user = Auth::user();
-        $references = Reference::query()->where('user_id', $user['id']);
-        return $references;
+        try {
+            $references = Reference::query()->where('user_id', $user['id'])->get();
+            return $references;
+        }catch (\Exception $e){
+            return false;
+        }
+
     }
 
     public function store(StoreReferenceRequest $request)
     {
+
         $validated_data = $request->validated();
         $reference = new Reference();
-
+        $user = Auth::user();
         try {
             foreach ($validated_data as $key => $item) {
                 $reference->{$key} = $item;
             }
-
+            $reference['user_id'] = $user['id'];
             $reference->save();
+
         } catch (\Exception $e) {
-            dd($e);
+
             return false;
         }
 
@@ -38,25 +45,28 @@ class ReferenceController extends Controller
 
     public function update(UpdateReferenceRequest $request, $id)
     {
-        $reference = Reference::query()->where('id', '=', $id)->get();
+        $reference = Reference::query()->where('id', '=', $id)->first();
         $validate_data = $request->validated();
         try {
             foreach ($validate_data as $key => $item) {
                 $reference->$key = $item;
             }
-            $reference->save();
+
+           $reference->save();
         } catch (\Exception $e) {
             return false;
         }
     }
 
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $reference = Reference::query()->where('id', '=', $request['id']);
+//        $reference = Reference::query()->where('id', '=', $request['id']);
         try {
-
+            $reference = Reference::query()->where('id',$id);
             $reference->delete();
+
         } catch (\Exception $e) {
+            dd($e);
             return false;
         }
     }

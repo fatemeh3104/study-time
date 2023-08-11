@@ -5,10 +5,11 @@ namespace App\Models;
 use App\Enums\HardnessDegree;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Reference extends Model
 {
-    use HasFactory;
+    use HasFactory ,SoftDeletes;
     protected $casts = [
         'hardness-degree' => HardnessDegree::class
     ];
